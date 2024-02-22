@@ -1,0 +1,58 @@
+openapi: 3.1.0
+info:
+  title: Currency Converter and Email Sender
+  description: This API allows users to convert currency and send emails.
+  version: '1.0'
+servers:
+  - url: https://currency-conversion-plugin--mhowai0802.repl.co
+paths:
+  /convert:
+    get:
+      summary: Convert currency
+      parameters:
+        - name: from
+          in: query
+          description: The currency code to convert from.
+          required: true
+          schema:
+            type: string
+        - name: to
+          in: query
+          description: The currency code to convert to.
+          required: true
+          schema:
+            type: string
+        - name: amount
+          in: query
+          description: The amount to convert.
+          required: true
+          schema:
+            type: number
+        - name: date
+          in: query
+          description: The date to use for historical rates (optional).
+          schema:
+            type: string
+            format: date
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  from:
+                    type: string
+                  to:
+                    type: string
+                  amount:
+                    type: number
+                  converted_amount:
+                    type: number
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
